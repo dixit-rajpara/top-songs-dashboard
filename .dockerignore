@@ -1,0 +1,91 @@
+# Git
+.git
+.gitignore
+.github
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+.mypy_cache/
+
+# Virtual environments
+.venv
+venv/
+ENV/
+env/
+
+# Docker
+docker-compose.yaml
+docker-compose.yml
+docker/volumes/
+
+# Local data
+data/
+*.parquet
+*.csv
+*.json
+logs/
+*.log
+
+# Documentation and development
+docs/
+README.md
+PLANNING.md
+TASK.md
+*.md
+LICENSE
+tests/
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*.ipynb
+
+# Environment and configuration
+.env
+.env.*
+*.env
+config/local/
+.uv/
+
+# MinIO / S3 related
+.s3cfg
+
+# Prefect
+.prefect/
+
+# Spark
+spark-warehouse/
+metastore_db/
+derby.log

@@ -1,0 +1,60 @@
+# Python-generated files
+__pycache__/
+*.py[cod]
+*$py.class
+build/
+dist/
+wheels/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+.mypy_cache/
+
+# Virtual environments
+.venv
+venv/
+ENV/
+env/
+.env
+
+# Docker volumes and data
+docker/volumes/
+data/
+*.parquet
+*.csv
+*.json
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*.ipynb
+
+# Logs
+logs/
+*.log
+
+# Local configuration files
+config/local/
+.uv/
+
+# MinIO / S3 related
+.s3cfg
+
+# Prefect
+.prefect/
+
+# Spark
+spark-warehouse/
+metastore_db/
+derby.log
