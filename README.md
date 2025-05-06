@@ -37,7 +37,7 @@ The Top Songs Dashboard is an end-to-end data engineering project that demonstra
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/top_songs_dashboard.git
+   git clone https://github.com/dixit-rajpara/top_songs_dashboard.git
    cd top_songs_dashboard
    ```
 
