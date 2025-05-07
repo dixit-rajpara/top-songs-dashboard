@@ -1,11 +1,11 @@
 # 🎧 Top Songs Dashboard - Tasks
 
 ## 🚦 Phase 0: Project Setup
-- [ ] Initialize Git repository and folder structure
-- [ ] Set up `uv` environment and `.uv` config
-- [ ] Create `docker-compose.yaml` for all services
-- [ ] Add MinIO container and test connectivity
-- [ ] Define global `.env` config (hostnames, ports, keys)
+- [x] Initialize Git repository and folder structure
+- [x] Set up `uv` environment and `.uv` config
+- [ ] Create `docker-compose.yaml` for all services *(deferred: Kafka, MinIO, and Postgres are running as shared services on host; project-specific compose will be added later)*
+- [ ] Add MinIO container and test connectivity *(see above note)*
+- [x] Define global `.env` config (hostnames, ports, keys)
 
 ## 🎮 Phase 1: Simulated Clients & API Server
 - [ ] Write LLM-based song play data generator (with location, user ID, timestamp, etc.)
@@ -52,7 +52,11 @@
 | Final Polish     | 1–2 days           |
 
 ## 📋 Completed Tasks
-*No tasks completed yet*
+- [x] Initialize Git repository and folder structure
+- [x] Set up `uv` environment and `.uv` config
+- [x] Define global `.env` config (hostnames, ports, keys)
 
 ## 🔍 Discovered During Work
+- Kafka, MinIO, and Postgres are running as shared containers on the host for multiple projects. Project-specific `docker-compose.yaml` will be created later to orchestrate all services together for this project.
+
 *New tasks discovered during development will be added here* 
