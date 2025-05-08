@@ -28,11 +28,12 @@ The system is composed of microservices and batch/streaming components:
 |--------------------|-----------------------------------------|
 | Data Simulation     | Python + OpenAI API                     |
 | API Server          | FastAPI                                 |
-| Messaging Queue     | Apache Kafka                            |
+| Messaging Queue     | Apache Kafka (confluent-kafka)          |
 | Streaming Processor | Apache Spark Structured Streaming       |
-| Object Storage      | MinIO (S3-compatible)                   |
+| Object Storage      | MinIO (S3-compatible) via boto3         |
 | Workflow Orchestration | Prefect                             |
-| Serving DB          | PostgreSQL                              |
+| Serving DB          | PostgreSQL with asyncpg                 |
+| CLI Interface       | Typer + Rich                            |
 | Dashboard Frontend  | ReactJS + Chart.js                      |
 | Containerization    | Docker + Docker Compose                 |
 | Python Package Mgmt | `uv` (for virtualenv + dependency mgmt) |
@@ -60,13 +61,15 @@ top_songs_dashboard/
 ├── TASK.md                     # Task tracking and progress
 ├── docker/                     # Dockerfiles and container build setup
 ├── docs/                       # Project documentation, plans, and diagrams
+├── tests/                      # Unit and integration tests
 
 ├── top_songs/                  # Main application Python package
 │
-│   ├── cli/                    # CLI commands (e.g., Typer/Click-based interfaces)
+│   ├── cli/                    # CLI commands (e.g., Typer-based interfaces)
 │
 │   ├── core/                   # Core shared logic across domains
 │   │   ├── config/             # App settings, environment loader, global config
+│   │   ├── connectivity/       # Service connectivity checks
 │   │   ├── models/             # Shared domain models and schemas
 │   │   └── utils/              # Reusable utilities (logging, validation, etc.)
 │
@@ -85,9 +88,12 @@ top_songs_dashboard/
 │   │   ├── api/                # Optional API layer for exposing processed data
 │   │   └── dashboard/          # React frontend for visualizing top songs
 │
-│   └── storage/                # Data persistence and storage layer
-│       ├── database/           # PostgreSQL-related logic (schemas, access)
-│       └── object_store/       # S3/MinIO integration for data lake storage
+│   ├── storage/                # Data persistence and storage layer
+│   │   ├── database/           # PostgreSQL-related logic (schemas, access)
+│   │   └── object_store/       # S3/MinIO integration for data lake storage
+│   
+│   └── streaming/              # Data streaming / transport layer
+│       └── kafka.py            # Kafka interface for sending/receiving messages
 ```
 
 ## 🧪 Development Setup
@@ -96,6 +102,7 @@ top_songs_dashboard/
 - Single `docker-compose.yaml` file for local orchestration
 - MinIO replaces AWS S3 with no code changes
 - Python dependencies managed via **uv**
+- CLI interface for checking service connectivity
 
 ## 📚 Coding Style & Conventions
 
@@ -105,10 +112,11 @@ top_songs_dashboard/
 - **Formatting**: Code should be formatted with `black`
 - **Data Validation**: Use `pydantic` for data validation
 - **APIs**: Use `FastAPI` for APIs
-- **ORM**: Use `SQLAlchemy` or `SQLModel` if applicable
+- **Database**: Use `asyncpg` for asynchronous PostgreSQL access
 - **Documentation**: Write Google-style docstrings for every function
 - **Code Organization**: Maintain modularity and single responsibility principle
 - **File Size**: No file should exceed 500 lines of code
+- **Interfaces**: Implement consistent interfaces across storage and streaming services
 
 ## 🧠 Project Goals
 
@@ -123,4 +131,5 @@ top_songs_dashboard/
 - Add Redis caching for low-latency dashboard
 - Add Prometheus + Grafana for observability
 - Add user authentication (e.g., Auth0 or Firebase)
-- Deploy on k8s (minikube or kind) for CI/CD training 
+- Deploy on k8s (minikube or kind) for CI/CD training
+- Implement comprehensive test suite for all interfaces 
