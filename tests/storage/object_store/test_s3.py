@@ -125,7 +125,7 @@ def test_client_property(object_store_interface):
         mock_client_constructor.return_value = mock_client_instance
         
         # Access the client property
-        client = object_store_interface.client
+        _ = object_store_interface.client
         
         # Verify client was created with correct parameters
         mock_client_constructor.assert_called_once_with(
@@ -141,7 +141,7 @@ def test_client_property(object_store_interface):
         assert object_store_interface._client == mock_client_instance
         
         # Access again - should use cached client
-        client2 = object_store_interface.client
+        _ = object_store_interface.client
         assert mock_client_constructor.call_count == 1  # Still just one call
 
 
@@ -152,7 +152,7 @@ def test_resource_property(object_store_interface):
         mock_resource_constructor.return_value = mock_resource_instance
         
         # Access the resource property
-        resource = object_store_interface.resource
+        _ = object_store_interface.resource
         
         # Verify resource was created with correct parameters
         mock_resource_constructor.assert_called_once_with(

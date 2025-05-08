@@ -15,11 +15,12 @@ The Top Songs Dashboard is an end-to-end data engineering project that demonstra
 
 - **Data Simulation**: Python + OpenAI API
 - **API Server**: FastAPI
-- **Messaging Queue**: Apache Kafka
+- **Messaging Queue**: Apache Kafka (confluent-kafka)
 - **Streaming Processor**: Apache Spark Structured Streaming
-- **Object Storage**: MinIO (S3-compatible)
+- **Object Storage**: MinIO (S3-compatible) via boto3
 - **Workflow Orchestration**: Prefect
-- **Serving DB**: PostgreSQL
+- **Serving DB**: PostgreSQL with asyncpg
+- **CLI Interface**: Typer + Rich
 - **Dashboard Frontend**: ReactJS + Chart.js
 - **Containerization**: Docker + Docker Compose
 - **Python Package Mgmt**: `uv` (for virtualenv + dependency mgmt)
@@ -29,7 +30,7 @@ The Top Songs Dashboard is an end-to-end data engineering project that demonstra
 ### Prerequisites
 
 - Docker and Docker Compose
-- Python 3.10+
+- Python 3.12+
 - `uv` package manager
 - OpenAI API key (for data simulation)
 
@@ -63,12 +64,17 @@ The Top Songs Dashboard is an end-to-end data engineering project that demonstra
 
 ### Running the Application
 
-1. Start the data simulator:
+1. Check connectivity to all services:
+   ```bash
+   top-songs check-connectivity
+   ```
+
+2. Start the data simulator (when implemented):
    ```bash
    python -m top_songs.cli.simulation --rate 10
    ```
 
-2. Access the dashboard:
+3. Access the dashboard:
    - Frontend: http://localhost:3000
    - Prefect UI: http://localhost:4200
    - MinIO Console: http://localhost:9001
@@ -84,6 +90,12 @@ top_songs_dashboard/
 ├── docker/                     # Dockerfiles and container build setup
 ├── docs/                       # Project documentation, plans, and diagrams
 ├── top_songs/                  # Main application Python package
+│   ├── cli/                    # CLI commands
+│   ├── core/                   # Core shared logic
+│   ├── storage/                # Database and object store interfaces
+│   ├── streaming/              # Kafka and streaming interfaces
+│   └── ...                     # Other modules
+├── tests/                      # Unit and integration tests
 ```
 
 For more details about the project structure, see [PLANNING.md](PLANNING.md).
@@ -104,6 +116,13 @@ For more details about the project structure, see [PLANNING.md](PLANNING.md).
 2. Add appropriate tests in `tests/`
 3. Update documentation where relevant
 
+### Interfaces
+
+The project provides several high-level interfaces:
+- **KafkaInterface**: For producing and consuming Kafka messages
+- **PostgresInterface**: For PostgreSQL database operations
+- **ObjectStoreInterface**: For MinIO/S3 object storage operations
+
 ### Running Tests
 
 ```bash
@@ -123,6 +142,8 @@ pytest
 - [Prefect Documentation](https://docs.prefect.io/)
 - [MinIO Documentation](https://min.io/docs/minio/container/index.html)
 - [FastAPI Documentation](https://fastapi.tiangolo.com/)
+- [Confluent-Kafka Python](https://docs.confluent.io/kafka-clients/python/current/overview.html)
+- [Asyncpg Documentation](https://magicstack.github.io/asyncpg/current/)
 
 ## 📝 License
 

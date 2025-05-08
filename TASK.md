@@ -6,6 +6,9 @@
 - [ ] Create `docker-compose.yaml` for all services *(deferred: Kafka, MinIO, and Postgres are running as shared services on host; project-specific compose will be added later)*
 - [ ] Add MinIO container and test connectivity *(see above note)*
 - [x] Define global `.env` config (hostnames, ports, keys)
+- [x] Implement CLI command to check connectivity of all services (Postgres, Kafka, MinIO/S3, Prefect)
+- [x] Implement core interfaces for storage (PostgreSQL, S3/MinIO)
+- [x] Implement Kafka interface for streaming data
 
 ## 🎮 Phase 1: Simulated Clients & API Server
 - [ ] Write LLM-based song play data generator (with location, user ID, timestamp, etc.)
@@ -26,7 +29,7 @@
 - [ ] Create Flow: read raw parquet, enrich data, write enriched parquet
 - [ ] Create Flow: run top-10 aggregation and update PostgreSQL
 - [ ] Define schemas: `top_songs_hourly`, `top_songs_daily`
-- [ ] Use `psycopg2` or `SQLAlchemy` to push aggregates to DB
+- [ ] Use `asyncpg` to push aggregates to DB
 
 ## 🌐 Phase 4: Frontend Dashboard
 - [ ] Scaffold dashboard with Create React App / Vite
@@ -40,6 +43,8 @@
 - [ ] Add error handling and logging in services
 - [ ] Clean up Docker volumes, env configs
 - [ ] Document usage in `README.md`
+- [ ] Add unit tests for CLI commands (connectivity check, etc.)
+- [ ] Add unit tests for storage and streaming interfaces
 
 ## ⏰ Timeline Overview
 | Phase            | Estimated Duration |
@@ -55,8 +60,14 @@
 - [x] Initialize Git repository and folder structure
 - [x] Set up `uv` environment and `.uv` config
 - [x] Define global `.env` config (hostnames, ports, keys)
+- [x] Implement CLI command to check connectivity of all services (Postgres, Kafka, MinIO/S3, Prefect)
+- [x] Implement core interfaces for storage (PostgreSQL, S3/MinIO)
+- [x] Implement Kafka interface for streaming data
 
 ## 🔍 Discovered During Work
 - Kafka, MinIO, and Postgres are running as shared containers on the host for multiple projects. Project-specific `docker-compose.yaml` will be created later to orchestrate all services together for this project.
+- Need to add unit tests for CLI commands (connectivity check, etc.)
+- Need to add unit tests for storage and streaming interfaces
+- Moved connectivity check business logic from CLI to core module
 
 *New tasks discovered during development will be added here* 

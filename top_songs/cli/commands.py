@@ -6,11 +6,11 @@ import sys
 import typer
 from rich.console import Console
 from rich.table import Table
-from confluent_kafka.admin import AdminClient
-
-from top_songs.core.config import settings
-from top_songs.storage.database.postgres import PostgresInterface
-from top_songs.storage.object_store.s3 import ObjectStoreInterface
+from top_songs.core.connectivity import (
+    check_postgres_connection,
+    check_kafka_connection,
+    check_object_store_connection,
+)
 
 # Create Typer app
 app = typer.Typer(
@@ -21,54 +21,6 @@ app = typer.Typer(
 
 # Console for rich output
 console = Console()
-
-
-async def check_postgres_connection() -> bool:
-    """Check if PostgreSQL connection is working."""
-    if settings.postgres is None:
-        console.print("[yellow]PostgreSQL settings not configured[/]")
-        return False
-    
-    pg = PostgresInterface()
-    try:
-        await pg.connect()
-        await pg.disconnect()
-        return True
-    except Exception as e:
-        console.print(f"[red]PostgreSQL connection error: {str(e)}[/]")
-        return False
-
-
-def check_kafka_connection() -> bool:
-    """Check if Kafka connection is working."""
-    try:
-        # Create Kafka admin client to check the connection
-        conf = {'bootstrap.servers': settings.kafka.bootstrap_servers}
-        admin_client = AdminClient(conf)
-        
-        # Get metadata to check connection
-        _ = admin_client.list_topics(timeout=5)
-        return True
-    except Exception as e:
-        console.print(f"[red]Kafka connection error: {str(e)}[/]")
-        return False
-
-
-def check_object_store_connection() -> bool:
-    """Check if Object Store (MinIO/S3) connection is working."""
-    if settings.object_store is None:
-        console.print("[yellow]Object Store settings not configured[/]")
-        return False
-    
-    try:
-        obj_store = ObjectStoreInterface()
-        # Check connection by listing buckets
-        obj_store.client.list_buckets()
-        return True
-    except Exception as e:
-        console.print(f"[red]Object Store connection error: {str(e)}[/]")
-        return False
-
 
 @app.command("check-connectivity")
 def check_connectivity():
@@ -107,7 +59,6 @@ def check_connectivity():
     if not all([pg_result, kafka_result, obj_store_result]):
         sys.exit(1)
 
-
 @app.command("about")
 def about():
     """Display information about the application."""
@@ -115,8 +66,6 @@ def about():
     console.print("Version: 0.1.0")
     console.print("Author: Dixit Rajpara")
     console.print("Description: A dashboard for viewing top songs")
-
-
 
 if __name__ == "__main__":
     app() 
