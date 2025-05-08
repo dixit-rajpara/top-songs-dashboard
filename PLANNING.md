@@ -8,18 +8,31 @@ The Top Songs Dashboard is a learning-focused, end-to-end data engineering and a
 
 The system is composed of microservices and batch/streaming components:
 
-```
-[Simulated Clients] → [FastAPI Web Server] → [Kafka] → [Apache Spark Structured Streaming] → [MinIO (S3-compatible)]
-                                                                                                     │
-                                                                                                     ├─────────────┬─────────────┐
-                                                                                                     ▼                           ▼
-                                                                                               [ETL Jobs via Prefect]   [Aggregation Jobs via Prefect]
-                                                                                                     │                           │
-                                                                                                     ▼                           ▼
-                                                                                               [Enriched Data in S3]   [Top N Songs in PostgreSQL]
-                                                                                                                                 │
-                                                                                                                                 ▼
-                                                                                                                      [ReactJS Dashboard App]
+```css
+[Simulated Clients]
+         │
+         ▼
+[FastAPI Web Server]
+         │
+         ▼
+      [Kafka]
+         │
+         ▼
+[Apache Spark Structured Streaming]
+         │
+         ▼
+  [MinIO (S3-compatible)]
+         │
+         ├────────────┬────────────┐
+         ▼                         ▼
+[ETL Jobs via Airflow]     [Aggregation Jobs via Airflow]
+         │                         │
+         ▼                         ▼
+[Enriched Data in S3]     [Top N Songs in PostgreSQL]
+                                   │
+                                   ▼
+                        [ReactJS Dashboard App]
+
 ```
 
 ## 🔧 Tech Stack
