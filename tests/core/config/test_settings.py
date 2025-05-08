@@ -3,7 +3,7 @@ from pydantic import ValidationError
 from top_songs.core.config.settings import (
     Settings, 
     KafkaSettings, 
-    MinioSettings, 
+    ObjectStoreSettings, 
     PostgresSettings, 
     ApiSettings, 
     SparkSettings,
@@ -27,17 +27,17 @@ class TestKafkaSettings:
         assert settings.topic_name == "custom-topic"
 
 
-class TestMinioSettings:
-    """Tests for MinioSettings class."""
+class TestObjectStoreSettings:
+    """Tests for ObjectStoreSettings class."""
     
     def test_required_values(self):
         """Test that required values raise error if not provided."""
         with pytest.raises(ValidationError):
-            MinioSettings()
+            ObjectStoreSettings()
     
     def test_with_required_values(self):
         """Test that instance is created when required values are provided."""
-        settings = MinioSettings(
+        settings = ObjectStoreSettings(
             access_key="test-access-key",
             secret_key="test-secret-key"
         )
@@ -47,7 +47,7 @@ class TestMinioSettings:
     
     def test_all_values_override(self):
         """Test that all values can be overridden."""
-        settings = MinioSettings(
+        settings = ObjectStoreSettings(
             endpoint="minio:9000",
             access_key="custom-access-key",
             secret_key="custom-secret-key",
@@ -165,7 +165,7 @@ class TestSettings:
     def test_custom_settings(self):
         """Test creating Settings with custom values."""
         kafka = KafkaSettings(bootstrap_servers="kafka:9092")
-        minio = MinioSettings(access_key="test-key", secret_key="test-secret")
+        object_store = ObjectStoreSettings(access_key="test-key", secret_key="test-secret")
         postgres = PostgresSettings(postgres_dsn="postgresql://user:pass@postgres:5432/testdb")
         api = ApiSettings(port=9000)
         spark = SparkSettings(master="spark://spark-master:7077")
@@ -176,7 +176,7 @@ class TestSettings:
             debug=False,
             project_name="Test Project",
             kafka=kafka,
-            minio=minio,
+            object_store=object_store,
             postgres=postgres,
             api=api,
             spark=spark,
@@ -190,9 +190,9 @@ class TestSettings:
         
         # Test nested settings
         assert settings.kafka.bootstrap_servers == "kafka:9092"
-        assert settings.minio is not None
-        assert settings.minio.access_key == "test-key"
-        assert settings.minio.secret_key == "test-secret"
+        assert settings.object_store is not None
+        assert settings.object_store.access_key == "test-key"
+        assert settings.object_store.secret_key == "test-secret"
         assert settings.postgres is not None
         assert str(settings.postgres.postgres_dsn) == "postgresql://user:pass@postgres:5432/testdb"
         assert settings.api.port == 9000
@@ -201,9 +201,9 @@ class TestSettings:
     
     def test_optional_settings(self):
         """Test that Settings works with None values for optional nested settings."""
-        settings = Settings(minio=None, postgres=None)
+        settings = Settings(object_store=None, postgres=None)
         
-        assert settings.minio is None
+        assert settings.object_store is None
         assert settings.postgres is None
         
         # But other settings should use defaults

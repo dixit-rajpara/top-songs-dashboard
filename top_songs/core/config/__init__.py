@@ -1,5 +1,5 @@
 from .settings import (
-    settings, Settings, KafkaSettings, MinioSettings, PostgresSettings, ApiSettings, 
+    settings, Settings, KafkaSettings, ObjectStoreSettings, PostgresSettings, ApiSettings, 
     SparkSettings, PrefectSettings
 )
 
@@ -7,7 +7,7 @@ __all__ = [
     "settings",
     "Settings",
     "KafkaSettings",
-    "MinioSettings", 
+    "ObjectStoreSettings", 
     "PostgresSettings",
     "ApiSettings",
     "SparkSettings",

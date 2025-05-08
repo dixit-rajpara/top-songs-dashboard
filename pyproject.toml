@@ -5,8 +5,23 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "asyncpg>=0.30.0",
+    "boto3>=1.38.11",
     "confluent-kafka>=2.10.0",
+    "prefect>=3.4.0",
     "pydantic>=2.11.4",
     "pydantic-settings>=2.9.1",
-    "typer>=0.15.3",
+    "typer>=0.15.3"
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+    "pytest-asyncio>=0.26.0",
+]
+
+[project.scripts]
+top-songs = "top_songs.cli.main:app"
+
+[tool.setuptools]
+packages = ["top_songs"]

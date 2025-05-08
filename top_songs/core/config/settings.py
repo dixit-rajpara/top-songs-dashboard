@@ -10,8 +10,8 @@ class KafkaSettings(BaseSettings):
     topic_name: str = "song-plays"
 
 
-class MinioSettings(BaseSettings):
-    """MinIO (S3-compatible) storage settings."""
+class ObjectStoreSettings(BaseSettings):
+    """Object storage settings (compatible with S3, MinIO, etc.)."""
     endpoint: str = "localhost:9000"
     access_key: str
     secret_key: str
@@ -63,7 +63,7 @@ class PrefectSettings(BaseSettings):
 class Settings(BaseSettings):
     """Main application settings."""
     model_config = SettingsConfigDict(
-        env_file=".env.dev",
+        env_file=".env",
         env_file_encoding="utf-8",
         env_nested_delimiter="__",
         case_sensitive=False,
@@ -80,7 +80,7 @@ class Settings(BaseSettings):
     
     # Component settings
     kafka: KafkaSettings = KafkaSettings()
-    minio: Optional[MinioSettings] = None
+    object_store: Optional[ObjectStoreSettings] = None
     postgres: Optional[PostgresSettings] = None
     api: ApiSettings = ApiSettings()
     spark: SparkSettings = SparkSettings()
@@ -109,10 +109,10 @@ class Settings(BaseSettings):
         """Initialize settings, attempting to create nested settings if possible."""
         super().__init__(**data)
         
-        # Try to initialize MinioSettings if environment variables are available
+        # Try to initialize ObjectStoreSettings if environment variables are available
         try:
-            if self.minio is None:
-                self.minio = MinioSettings()
+            if self.object_store is None:
+                self.object_store = ObjectStoreSettings()
         except Exception:
             # Keep as None if validation fails
             pass
