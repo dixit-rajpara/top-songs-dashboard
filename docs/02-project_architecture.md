@@ -25,7 +25,7 @@ This document describes the architecture for the **Top Songs Dashboard** project
          │
          ├────────────┬────────────┐
          ▼                         ▼
-[ETL Jobs via Airflow]     [Aggregation Jobs via Airflow]
+[ETL Jobs via Prefect]     [Aggregation Jobs via Prefect]
          │                         │
          ▼                         ▼
 [Enriched Data in S3]     [Top N Songs in PostgreSQL]
@@ -77,14 +77,14 @@ This document describes the architecture for the **Top Songs Dashboard** project
 
 ---
 
-### 6. **Apache Airflow**
+### 6. **Prefect**
 - **Role**: Orchestrates data pipelines including:
   - ETL/ELT from MinIO
-  - Metadata enrichment
+  - Metadata enrichment (joins transactional and master data)
   - Aggregation (e.g., Top 10 songs)
   - Load to PostgreSQL
-- **DAGs**: Scheduled to run hourly/daily
-- **Deployment**: Docker-based Airflow setup with local executor or Celery
+- **DAGs/Flows**: Scheduled to run hourly/daily
+- **Deployment**: Docker-based Prefect setup
 
 ---
 

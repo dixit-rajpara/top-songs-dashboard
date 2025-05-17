@@ -1,6 +1,6 @@
 from datetime import date, datetime
-from pydantic import BaseModel, Field
-from typing import Optional
+from pydantic import BaseModel
+
 
 class SongMasterData(BaseModel):
     """
@@ -23,6 +23,7 @@ class SongMasterData(BaseModel):
     duration_ms: int
     release_date: date
 
+
 class UserMasterData(BaseModel):
     """
     Represents a user in the master data set.
@@ -40,6 +41,7 @@ class UserMasterData(BaseModel):
     registration_date: date
     country: str
 
+
 class LocationMasterData(BaseModel):
     """
     Represents a location or region in the master data set.
@@ -56,6 +58,7 @@ class LocationMasterData(BaseModel):
     country_code: str
     latitude: float
     longitude: float
+
 
 class PlayEventData(BaseModel):
     """

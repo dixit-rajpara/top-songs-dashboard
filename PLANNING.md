@@ -57,7 +57,7 @@ The system is composed of microservices and batch/streaming components:
 2. **FastAPI server** pushes events to **Kafka**
 3. **Spark** reads events from Kafka, processes them, and writes to **MinIO** in partitioned Parquet files
 4. **Prefect** runs:
-   - Enrichment jobs to add metadata
+   - Enrichment jobs to add metadata (joins transactional and master data)
    - Aggregation jobs to calculate top songs
    - Loading jobs to update PostgreSQL
 5. **ReactJS Dashboard** queries PostgreSQL and renders top 10 songs per region/hour/day

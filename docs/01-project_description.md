@@ -13,7 +13,7 @@ The project is designed to be modular, containerized using Docker, and uses `uv`
 - Simulate real-time song play data with metadata using LLM-generated inputs.
 - Ingest and stream data via a REST API into Kafka.
 - Use Apache Spark to process streaming data and store it in MinIO (S3-compatible).
-- Enrich and aggregate data via Airflow-managed pipelines.
+- Enrich and aggregate data via Prefect-managed pipelines.
 - Persist the final top-song statistics into PostgreSQL for querying.
 - Serve this data via a frontend dashboard built in ReactJS.
 
@@ -28,7 +28,7 @@ The project is designed to be modular, containerized using Docker, and uses `uv`
 | Messaging Queue     | Apache Kafka                            |
 | Streaming Processor | Apache Spark Structured Streaming       |
 | Object Storage      | MinIO (S3-compatible)                   |
-| Workflow Orchestration | Apache Airflow                      |
+| Workflow Orchestration | Prefect                      |
 | Serving DB          | PostgreSQL                              |
 | Dashboard Frontend  | ReactJS + Chart.js                      |
 | Containerization    | Docker + Docker Compose                 |
@@ -41,8 +41,8 @@ The project is designed to be modular, containerized using Docker, and uses `uv`
 1. **Simulated clients** send song play events with metadata via REST API.
 2. **FastAPI server** pushes events to **Kafka**.
 3. **Spark** reads events from Kafka, processes them, and writes to **MinIO** in partitioned Parquet files.
-4. **Airflow** runs:
-   - Enrichment jobs to add metadata
+4. **Prefect** runs:
+   - Enrichment jobs to add metadata (joins transactional and master data)
    - Aggregation jobs to calculate top songs
    - Loading jobs to update PostgreSQL
 5. **ReactJS Dashboard** queries PostgreSQL and renders top 10 songs per region/hour/day.
@@ -52,7 +52,7 @@ The project is designed to be modular, containerized using Docker, and uses `uv`
 ## 📦 Deliverables
 
 - Dockerized microservices for ingestion, processing, and frontend
-- Airflow DAGs for data orchestration
+- Prefect DAGs for data orchestration
 - Clean, testable Python code using `uv`
 - React-based web dashboard
 - Example simulated data and usage instructions
@@ -95,7 +95,7 @@ top_songs_dashboard/
 │   │   └── simulator/          # Simulated client that generates song play events
 │
 │   ├── orchestration/          # Workflow orchestration logic
-│   │   └── dags/               # Airflow DAGs or other orchestrated pipelines
+│   │   └── dags/               # Prefect DAGs or other orchestrated pipelines
 │
 │   ├── processing/             # Data processing jobs
 │   │   ├── enrichment/         # Metadata enhancement, lookups, etc.
