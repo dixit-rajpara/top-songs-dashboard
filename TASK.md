@@ -4,14 +4,14 @@
 - [x] Initialize Git repository and folder structure
 - [x] Set up `uv` environment and `.uv` config
 - [ ] Create `docker-compose.yaml` for all services *(deferred: Kafka, MinIO, and Postgres are running as shared services on host; project-specific compose will be added later)*
-- [ ] Add MinIO container and test connectivity *(see above note)*
+- [x] Add MinIO container and test connectivity *(see above note)*
 - [x] Define global `.env` config (hostnames, ports, keys)
 - [x] Implement CLI command to check connectivity of all services (Postgres, Kafka, MinIO/S3, Prefect)
 - [x] Implement core interfaces for storage (PostgreSQL, S3/MinIO)
 - [x] Implement Kafka interface for streaming data
 
 ## 🎮 Phase 1: Simulated Clients & API Server
-- [ ] Write LLM-based song play data generator (with location, user ID, timestamp, etc.)
+- [x] Write LLM-based song play data generator (with location, user ID, timestamp, etc.)
 - [ ] Create FastAPI server with `POST /play` endpoint
 - [ ] Integrate Kafka producer in API server
 - [ ] Dockerize the API server

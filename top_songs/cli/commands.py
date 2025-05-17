@@ -11,6 +11,7 @@ from top_songs.core.connectivity import (
     check_kafka_connection,
     check_object_store_connection,
 )
+from top_songs.ingestion.simulator.cli import simulator_app
 
 # Create Typer app
 app = typer.Typer(
@@ -66,6 +67,8 @@ def about():
     console.print("Version: 0.1.0")
     console.print("Author: Dixit Rajpara")
     console.print("Description: A dashboard for viewing top songs")
+
+app.add_typer(simulator_app)
 
 if __name__ == "__main__":
     app() 

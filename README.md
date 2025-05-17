@@ -69,9 +69,10 @@ The Top Songs Dashboard is an end-to-end data engineering project that demonstra
    top-songs check-connectivity
    ```
 
-2. Start the data simulator (when implemented):
+2. Start the data simulator:
    ```bash
-   python -m top_songs.cli.simulation --rate 10
+   top-songs simulate generate-master --help
+   top-songs simulate run --help
    ```
 
 3. Access the dashboard:
@@ -148,3 +149,47 @@ pytest
 ## 📝 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Data Simulator CLI Usage
+
+The data simulator is available as a subcommand of the main CLI:
+
+### Generate Master Data
+
+```
+top-songs simulate generate-master [OPTIONS]
+```
+
+**Options:**
+- `--output-dir TEXT`         Directory to store master data files. (Default: `data/master/`)
+- `--num-songs INTEGER`       Number of song records to generate. (Default: 1000)
+- `--num-users INTEGER`       Number of user records to generate. (Default: 5000)
+- `--num-locations INTEGER`   Number of location/region records to generate. (Default: 100)
+- `--format TEXT`             Output format for master data (`csv` or `json`). (Default: `csv`)
+
+### Run Data Simulation
+
+```
+top-songs simulate run [OPTIONS]
+```
+
+**Options:**
+- `--historical`              Enable historical mode.
+- `--live`                    Enable live mode.
+- `--start-datetime TEXT`     Start ISO datetime for historical data (required for historical).
+- `--end-datetime TEXT`       End ISO datetime for historical data (required for historical).
+- `--posting-rate FLOAT`      Max events per second to post to the API (historical mode). (Default: 10.0)
+- `--duration-seconds INT`    Duration for live simulation in seconds (0 = indefinite). (Default: 0)
+- `--master-data-dir TEXT`    Directory to load master data from. (Default: `data/master/`)
+- `--volume INTEGER`          Total number of play events to generate (historical) or events per minute (live). (Default: 10000 for historical, 60 for live)
+- `--threads INTEGER`         Number of parallel threads for generating/posting. (Default: 4)
+- `--api-endpoint TEXT`       The URL of the API endpoint to post play events. (Default: `http://localhost:8000/play`)
+- `--format TEXT`             Master data file format (`csv` or `json`). (Default: `csv`)
+
+**Example:**
+
+```
+top-songs simulate generate-master --num-songs 100 --num-users 200 --num-locations 10 --format csv
+
+top-songs simulate run --historical --start-datetime "2023-01-01T00:00:00" --end-datetime "2023-01-02T00:00:00" --volume 1000
+```

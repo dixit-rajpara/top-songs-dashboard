@@ -25,7 +25,7 @@ The system is composed of microservices and batch/streaming components:
          │
          ├────────────┬────────────┐
          ▼                         ▼
-[ETL Jobs via Airflow]     [Aggregation Jobs via Airflow]
+[ETL Jobs via Prefect]     [Aggregation Jobs via Prefect]
          │                         │
          ▼                         ▼
 [Enriched Data in S3]     [Top N Songs in PostgreSQL]
