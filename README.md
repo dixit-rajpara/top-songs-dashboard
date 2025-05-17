@@ -62,6 +62,30 @@ The Top Songs Dashboard is an end-to-end data engineering project that demonstra
    docker-compose up -d
    ```
 
+### Running the API Server with Docker
+
+To build and run the FastAPI ingestion API server as a container:
+
+```bash
+docker build -t top-songs-api .
+docker run --rm -p 8000:8000 top-songs-api
+```
+
+- The API will be available at http://localhost:8000
+- Healthcheck endpoint: http://localhost:8000/health
+
+### Running the API Server with Docker Compose
+
+To build and run the FastAPI ingestion API server using Docker Compose:
+
+```bash
+docker compose up --build
+```
+
+- The API will be available at http://localhost:8000
+- Healthcheck endpoint: http://localhost:8000/health
+- Environment variables can be set in the `.env` file
+
 ### Running the Application
 
 1. Check connectivity to all services:
@@ -193,3 +217,11 @@ top-songs simulate generate-master --num-songs 100 --num-users 200 --num-locatio
 
 top-songs simulate run --historical --start-datetime "2023-01-01T00:00:00" --end-datetime "2023-01-02T00:00:00" --volume 1000
 ```
+
+## 🪵 Logging & Observability
+
+- All logs (API server, simulator, CLI, etc.) use a centralized logging configuration defined in `top_songs/core/config/logger.py`.
+- Log output is controlled by the `log_output` and `logs_dir` settings (see `.env` or `Settings`).
+- By default, logs are written to both the console and `logs/app.log`.
+- In Docker, logs are available via `docker logs <container>` and also persisted to the `logs/` directory on the host (mounted as a volume).
+- You can change log level, output mode, and log file location by editing your `.env` or settings.

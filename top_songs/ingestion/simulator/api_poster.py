@@ -35,7 +35,7 @@ class APIPoster:
             try:
                 response = httpx.post(
                     self.api_endpoint,
-                    json=event.model_dump(),
+                    json=event.model_dump(mode='json'),
                     timeout=timeout,
                 )
                 response.raise_for_status()

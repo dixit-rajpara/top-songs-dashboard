@@ -11,11 +11,12 @@
 - [x] Implement Kafka interface for streaming data
 
 ## 🎮 Phase 1: Simulated Clients & API Server
-- [x] Write LLM-based song play data generator (with location, user ID, timestamp, etc.)
-- [ ] Create FastAPI server with `POST /play` endpoint
-- [ ] Integrate Kafka producer in API server
-- [ ] Dockerize the API server
-- [ ] Use `uvicorn` + `gunicorn` for production-like setup
+- [x] Write Faker/Simpy-based song play data generator (with location, user ID, timestamp, etc.)
+- [x] Create FastAPI server with `POST /play` endpoint
+- [x] Integrate Kafka producer in API server
+- [x] Dockerize the API server
+- [x] Use `uvicorn` + `gunicorn` for production-like setup
+- [x] Add docker-compose.yaml for API server orchestration
 
 ## 🔄 Phase 2: Kafka to MinIO via Spark
 - [ ] Set up Kafka container in Docker Compose
@@ -69,5 +70,7 @@
 - Need to add unit tests for CLI commands (connectivity check, etc.)
 - Need to add unit tests for storage and streaming interfaces
 - Moved connectivity check business logic from CLI to core module
+- Dockerfile for API server added; supports both uvicorn and gunicorn entrypoints for production flexibility.
+- docker-compose.yaml is structured for easy extension with Kafka, MinIO, Postgres, etc. in future phases.
 
 *New tasks discovered during development will be added here* 
